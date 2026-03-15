@@ -48,7 +48,7 @@ uv run python prepare_dataset.py \
   --random-state 42
 ```
 
-`prepare_dataset.py` loads product metadata from the Hugging Face dataset `McAuley-Lab/Amazon-Reviews-2023`.
+`prepare_dataset.py` loads product metadata from the Hugging Face dataset [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023).
 
 Behavior:
 - if `cleaned.csv` already exists, the script loads it directly
@@ -76,8 +76,7 @@ Current training flow:
 
 Submission generation is implemented in `inference.py` via `generate_predictions(...)`.
 
-Download the workshop test set from:
-- `https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM`
+Download the workshop test set from [Kirin0010/CVPR_workshop_efficiencyVLM](https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM)
 
 Clone it with Git and Git LFS enabled, for example:
 
@@ -100,3 +99,7 @@ It currently:
 - `model.py` currently supports only `efficientnet_b0` for the image backbone.
 - `data_pipeline.py` fetches training images from URLs inside the dataset class, which is convenient for iteration but can become the main runtime bottleneck during training.
 - `metric_utils.py` provides both analytical and runtime FLOPs paths; the analytical image FLOPs estimate is still based on EfficientNet-B0.
+
+## Acknowledgement
+- Datasets are obtained from [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023).
+- Dataset preprocessing techniques are referred from [AmazonReviews2023](https://github.com/hyp1231/AmazonReviews2023).
