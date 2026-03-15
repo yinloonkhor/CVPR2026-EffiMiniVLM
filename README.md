@@ -36,6 +36,8 @@ Install and sync dependencies with:
 uv sync
 ```
 
+Also obtain the command to install PyTorch with CUDA based on your device through this [website](https://pytorch.org/get-started/locally/).
+
 ## Dataset Preparation
 
 Build the cached CSV files with:
