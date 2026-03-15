@@ -129,7 +129,16 @@ class MultimodalDataset(Dataset):
             try:
                 resp = requests.get(url, timeout=10)
                 resp.raise_for_status()
-                img = Image.open(BytesIO(resp.content)).convert("RGB")
+                img = Image.open(BytesIO(resp.content))
+
+                # Handle palette/transparency images safely
+                if img.mode in ("P", "LA") or (
+                    img.mode == "RGBA" or "transparency" in img.info
+                ):
+                    img = img.convert("RGBA").convert("RGB")
+                else:
+                    img = img.convert("RGB")
+
                 if img.width >= 10 and img.height >= 10:
                     loaded.append(img)
             except Exception:
