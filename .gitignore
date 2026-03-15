@@ -12,3 +12,4 @@ wheels/
 # Data and cache directories
 hf_datasets/
 data/
+models/
