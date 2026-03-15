@@ -1,7 +1,6 @@
 # EffiMiniVLM
 
-This repository is a solution for `LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring`:
-- `https://www.codabench.org/competitions/13463/`
+This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/)
 
 Lightweight multimodal regression pipeline built around:
 - `EfficientNet-B0` for images
@@ -36,25 +35,6 @@ Install and sync dependencies with:
 ```bash
 uv sync
 ```
-
-Then run project commands through the managed environment, for example:
-
-```bash
-uv run python train.py
-```
-
-Download the workshop test set from:
-- `https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM`
-
-Clone it with Git and Git LFS enabled, for example:
-
-```bash
-git lfs install
-git clone https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM
-unzip CVPR_workshop_efficiencyVLM/setB/images.zip -d CVPR_workshop_efficiencyVLM/setB
-```
-
-The inference path in `inference.py` expects the downloaded test files to be available locally under `CVPR_workshop_efficiencyVLM/`.
 
 ## Dataset Preparation
 
@@ -95,6 +75,19 @@ Current training flow:
 ## Inference
 
 Submission generation is implemented in `inference.py` via `generate_predictions(...)`.
+
+Download the workshop test set from:
+- `https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM`
+
+Clone it with Git and Git LFS enabled, for example:
+
+```bash
+git lfs install
+git clone https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM
+unzip CVPR_workshop_efficiencyVLM/setB/images.zip -d CVPR_workshop_efficiencyVLM/setB
+```
+
+The inference path in `inference.py` expects the downloaded test files to be available locally under `CVPR_workshop_efficiencyVLM/`.
 
 It currently:
 - loads test samples from `CVPR_workshop_efficiencyVLM/setB/input.csv`
