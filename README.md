@@ -1,7 +1,6 @@
 # EffiMiniVLM
 
-This repository is a solution for `LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring`:
-- `https://www.codabench.org/competitions/13463/`
+This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/)
 
 Lightweight multimodal regression pipeline built around:
 - `EfficientNet-B0` for images
@@ -37,25 +36,6 @@ Install and sync dependencies with:
 uv sync
 ```
 
-Then run project commands through the managed environment, for example:
-
-```bash
-uv run python train.py
-```
-
-Download the workshop test set from:
-- `https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM`
-
-Clone it with Git and Git LFS enabled, for example:
-
-```bash
-git lfs install
-git clone https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM
-unzip CVPR_workshop_efficiencyVLM/setB/images.zip -d CVPR_workshop_efficiencyVLM/setB
-```
-
-The inference path in `inference.py` expects the downloaded test files to be available locally under `CVPR_workshop_efficiencyVLM/`.
-
 ## Dataset Preparation
 
 Build the cached CSV files with:
@@ -68,7 +48,7 @@ uv run python prepare_dataset.py \
   --random-state 42
 ```
 
-`prepare_dataset.py` loads product metadata from the Hugging Face dataset `McAuley-Lab/Amazon-Reviews-2023`.
+`prepare_dataset.py` loads product metadata from the Hugging Face dataset [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023).
 
 Behavior:
 - if `cleaned.csv` already exists, the script loads it directly
@@ -96,6 +76,18 @@ Current training flow:
 
 Submission generation is implemented in `inference.py` via `generate_predictions(...)`.
 
+Download the workshop test set from [Kirin0010/CVPR_workshop_efficiencyVLM](https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM)
+
+Clone it with Git and Git LFS enabled, for example:
+
+```bash
+git lfs install
+git clone https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM
+unzip CVPR_workshop_efficiencyVLM/setB/images.zip -d CVPR_workshop_efficiencyVLM/setB
+```
+
+The inference path in `inference.py` expects the downloaded test files to be available locally under `CVPR_workshop_efficiencyVLM/`.
+
 It currently:
 - loads test samples from `CVPR_workshop_efficiencyVLM/setB/input.csv`
 - reads local images from `CVPR_workshop_efficiencyVLM/setB`
@@ -107,3 +99,7 @@ It currently:
 - `model.py` currently supports only `efficientnet_b0` for the image backbone.
 - `data_pipeline.py` fetches training images from URLs inside the dataset class, which is convenient for iteration but can become the main runtime bottleneck during training.
 - `metric_utils.py` provides both analytical and runtime FLOPs paths; the analytical image FLOPs estimate is still based on EfficientNet-B0.
+
+## Acknowledgement
+- Datasets are obtained from [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023).
+- Dataset preprocessing techniques are referred from [AmazonReviews2023](https://github.com/hyp1231/AmazonReviews2023).
