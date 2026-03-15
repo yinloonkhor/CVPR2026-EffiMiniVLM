@@ -36,6 +36,8 @@ Install and sync dependencies with:
 uv sync
 ```
 
+Also obtain the command to install PyTorch with CUDA based on your device through this [website](https://pytorch.org/get-started/locally/).
+
 ## Dataset Preparation
 
 Build the cached CSV files with:
@@ -48,11 +50,16 @@ uv run python prepare_dataset.py \
   --random-state 42
 ```
 
+Or download the processed dataset from [Google Drive](https://drive.google.com/file/d/1Av9anhjgmeX0rpBOurZ0rE81jgp3El8w/view?usp=drive_link).
+
 `prepare_dataset.py` loads product metadata from the Hugging Face dataset [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023).
 
 Behavior:
 - if `cleaned.csv` already exists, the script loads it directly
 - otherwise it downloads/processes the raw metadata and then writes both cached CSVs
+
+## Download Trained Model
+The best trained model (EfficientNet-B0 + MiniLMv2-L6-H384) can be downloaded from [here](https://drive.google.com/file/d/11wZ2-I5TEzKZ6e-TbWsR6nR8vYQnnwRS/view?usp=drive_link)
 
 ## Training
 
