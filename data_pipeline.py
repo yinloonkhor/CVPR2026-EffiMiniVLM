@@ -52,7 +52,7 @@ def build_collate_fn(
         pixel_list = []
         for item in batch:
             img_list = item.get("image_urls", [])
-            pil_img = img_list[0] if len(img_list) > 0 else black_image
+            pil_img = img_list[0] if len(img_list) > 0 else black_image # Only 1 image per sample for now
             pixel_list.append(image_transform(pil_img))
         pixel_values = torch.stack(pixel_list, dim=0)
 
