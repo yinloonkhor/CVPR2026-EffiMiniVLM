@@ -62,9 +62,6 @@ Behavior:
 - if `cleaned.csv` already exists, the script loads it directly
 - otherwise it downloads/processes the raw metadata and then writes both cached CSVs
 
-## Download Trained Model
-The best trained model (EfficientNet-B0 + MiniLMv2-L6-H384) can be downloaded from [here](https://drive.google.com/file/d/11wZ2-I5TEzKZ6e-TbWsR6nR8vYQnnwRS/view?usp=drive_link).
-
 ## Training
 
 Run training with:
@@ -83,9 +80,24 @@ Current training flow:
 - evaluates on the held-out test split after training
 - optionally generates a submission if `generate_submission` is enabled in `TRAIN_DEFAULTS`
 
+## Download and Load Trained Model
+The best trained model (EfficientNet-B0 + MiniLMv2-L6-H384) can be downloaded from [here](https://drive.google.com/file/d/11wZ2-I5TEzKZ6e-TbWsR6nR8vYQnnwRS/view?usp=drive_link).
+
+Use it with the inference workflow documented below.
+
 ## Inference
 
 Submission generation is implemented in `inference.py` via `generate_predictions(...)`.
+
+You can generate a submission directly from a checkpoint with:
+
+```bash
+uv run python inference.py \
+  --model-path path/to/best_model.pt \
+  --input-csv CVPR_workshop_efficiencyVLM/setB/input.csv \
+  --images-dir CVPR_workshop_efficiencyVLM/setB \
+  --output-csv submission.csv
+```
 
 Download the workshop test set from [Kirin0010/CVPR_workshop_efficiencyVLM](https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM)
 

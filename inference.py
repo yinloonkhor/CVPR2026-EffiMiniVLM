@@ -1,3 +1,4 @@
+import argparse
 import time
 
 import pandas as pd
@@ -5,8 +6,10 @@ import torch
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+from config import TRAIN_DEFAULTS
 from data_pipeline import TestDataset, build_collate_fn
 from metric_utils import count_params, measure_flops
+from model import MultimodalRegressor
 
 
 def generate_predictions(
@@ -112,3 +115,84 @@ def generate_predictions(
     print("=" * 60)
 
     return submission_df
+
+
+def build_inference_model(config: dict, device):
+    """Build the multimodal regressor from config for checkpoint loading."""
+    model = MultimodalRegressor(
+        image_model_name=config.get("image_model_name", "efficientnet_b0"),
+        text_model_name=config.get(
+            "text_model_name",
+            "nreimers/MiniLM-L6-H384-uncased",
+        ),
+        hidden_dim=config.get("hidden_dim", 512),
+        dropout=config.get("dropout", 0.2),
+        freeze_image=config.get("freeze_image", False),
+        freeze_text=config.get("freeze_text", False),
+    ).to(device)
+    return model
+
+
+def load_model_from_path(model_path: str, config: dict, device):
+    """Instantiate the model and load checkpoint weights from disk."""
+    model = build_inference_model(config, device)
+    print(f"Loading model from : {model_path}")
+    state_dict = torch.load(model_path, map_location=device, weights_only=True)
+    model.load_state_dict(state_dict)
+    model.eval()
+    return model
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Load a trained checkpoint and generate a submission CSV.",
+    )
+    parser.add_argument(
+        "--model-path",
+        default=TRAIN_DEFAULTS.get("model_path"),
+        help="Path to a trained .pt checkpoint.",
+    )
+    parser.add_argument(
+        "--input-csv",
+        default="CVPR_workshop_efficiencyVLM/setB/input.csv",
+        help="Path to the workshop input CSV.",
+    )
+    parser.add_argument(
+        "--images-dir",
+        default="CVPR_workshop_efficiencyVLM/setB",
+        help="Directory containing workshop images.",
+    )
+    parser.add_argument(
+        "--output-csv",
+        default="submission.csv",
+        help="Where to write the generated submission CSV.",
+    )
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    config = dict(TRAIN_DEFAULTS)
+
+    if not args.model_path:
+        raise ValueError(
+            "No model path provided. Set TRAIN_DEFAULTS['model_path'] or pass --model-path."
+        )
+
+    config["model_path"] = args.model_path
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device      : {device}")
+
+    model = load_model_from_path(args.model_path, config, device)
+    generate_predictions(
+        model=model,
+        config=config,
+        device=device,
+        input_csv=args.input_csv,
+        images_dir=args.images_dir,
+        output_csv=args.output_csv,
+    )
+
+
+if __name__ == "__main__":
+    main()

@@ -355,34 +355,24 @@ def main():
     # ====================================================================
     # Final evaluation on test split
     # ====================================================================
-    if config["train"]:
-        best_path = os.path.join(best_dir, "best_model.pt")
-        print(f"\nLoading best model from {best_path} ...")
-        model.load_state_dict(torch.load(best_path, map_location=device, weights_only=True))
+    best_path = os.path.join(best_dir, "best_model.pt")
+    print(f"\nLoading best model from {best_path} ...")
+    model.load_state_dict(torch.load(best_path, map_location=device, weights_only=True))
 
-        test_loss, test_mae, test_rmse, test_plcc, test_std_pred, test_std_label = evaluate(
-            model, test_loader, eval_criterion, device
-        )
-        print("=" * 60)
-        print("Test results:")
-        print(
-            f"  Loss : {test_loss:.4f}"
-            f"  MAE  : {test_mae:.4f}"
-            f"  RMSE : {test_rmse:.4f}"
-            f"  PLCC : {test_plcc:.4f}"
-            f"  std(y_pred): {test_std_pred:.4f}"
-            f"  std(y_true): {test_std_label:.4f}"
-        )
-        print("=" * 60)
-
-    else:
-        model_path = config.get("model_path", None)
-        if model_path is not None:
-            print(f"\nLoading model from {model_path} ...")
-            model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
-        else:
-            print("\nNo model path provided. Skipping model loading and submission generation.")
-            return
+    test_loss, test_mae, test_rmse, test_plcc, test_std_pred, test_std_label = evaluate(
+        model, test_loader, eval_criterion, device
+    )
+    print("=" * 60)
+    print("Test results:")
+    print(
+        f"  Loss : {test_loss:.4f}"
+        f"  MAE  : {test_mae:.4f}"
+        f"  RMSE : {test_rmse:.4f}"
+        f"  PLCC : {test_plcc:.4f}"
+        f"  std(y_pred): {test_std_pred:.4f}"
+        f"  std(y_true): {test_std_label:.4f}"
+    )
+    print("=" * 60)
 
     # ====================================================================
     # Generate submission
