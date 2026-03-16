@@ -36,7 +36,11 @@ Install and sync dependencies with:
 uv sync
 ```
 
-Also obtain the command to install PyTorch with CUDA based on your device through this [website](https://pytorch.org/get-started/locally/).
+Also obtain the command to install PyTorch with CUDA based on your device through this [website](https://pytorch.org/get-started/locally/). An example of the command is shown below. The current `pyproject.toml` doesn't include torch and torchvision because each machine requires different CUDA version.
+
+```bash
+uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
+```
 
 ## Dataset Preparation
 
@@ -59,7 +63,7 @@ Behavior:
 - otherwise it downloads/processes the raw metadata and then writes both cached CSVs
 
 ## Download Trained Model
-The best trained model (EfficientNet-B0 + MiniLMv2-L6-H384) can be downloaded from [here](https://drive.google.com/file/d/11wZ2-I5TEzKZ6e-TbWsR6nR8vYQnnwRS/view?usp=drive_link)
+The best trained model (EfficientNet-B0 + MiniLMv2-L6-H384) can be downloaded from [here](https://drive.google.com/file/d/11wZ2-I5TEzKZ6e-TbWsR6nR8vYQnnwRS/view?usp=drive_link).
 
 ## Training
 
