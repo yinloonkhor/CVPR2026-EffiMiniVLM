@@ -89,7 +89,19 @@ Use it with the inference workflow documented below.
 
 Submission generation is implemented in `inference.py` via `generate_predictions(...)`.
 
-You can generate a submission directly from a checkpoint with:
+Download the workshop test set from [Kirin0010/CVPR_workshop_efficiencyVLM](https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM)
+
+Clone it with Git and Git LFS enabled, for example:
+
+```bash
+git lfs install
+git clone https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM
+unzip CVPR_workshop_efficiencyVLM/setB/setB.zip -d CVPR_workshop_efficiencyVLM/setB
+```
+
+The inference path in `inference.py` expects the downloaded test files to be available locally under `CVPR_workshop_efficiencyVLM/`.
+
+Once the checkpoint and test files are available locally, you can generate a submission with:
 
 ```bash
 uv run python inference.py \
@@ -98,18 +110,6 @@ uv run python inference.py \
   --images-dir CVPR_workshop_efficiencyVLM/setB \
   --output-csv submission.csv
 ```
-
-Download the workshop test set from [Kirin0010/CVPR_workshop_efficiencyVLM](https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM)
-
-Clone it with Git and Git LFS enabled, for example:
-
-```bash
-git lfs install
-git clone https://huggingface.co/datasets/Kirin0010/CVPR_workshop_efficiencyVLM
-unzip CVPR_workshop_efficiencyVLM/setB/images.zip -d CVPR_workshop_efficiencyVLM/setB
-```
-
-The inference path in `inference.py` expects the downloaded test files to be available locally under `CVPR_workshop_efficiencyVLM/`.
 
 It currently:
 - loads test samples from `CVPR_workshop_efficiencyVLM/setB/input.csv`

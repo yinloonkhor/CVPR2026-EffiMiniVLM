@@ -62,6 +62,6 @@ TRAIN_DEFAULTS = {
     "save_dir": "models",
     "save_path": "efficientnet_minilm",
     "train": True,
-    "model_path": None,
+    "model_path": "models/efficientnet_minilm/best/best_model.pt",
     "generate_submission": False,
 }

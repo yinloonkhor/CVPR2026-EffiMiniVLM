@@ -13,3 +13,5 @@ wheels/
 hf_datasets/
 data/
 models/
+CVPR_workshop_efficiencyVLM/
+submission.csv
