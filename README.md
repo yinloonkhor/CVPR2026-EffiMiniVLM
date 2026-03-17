@@ -61,7 +61,7 @@ Or download the processed dataset from [Google Drive](https://drive.google.com/f
 `prepare_dataset.py` loads product metadata from the Hugging Face dataset [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023).
 
 Behavior:
-- if `cleaned.csv` already exists, the script loads it directly
+- if `cleaned.csv` already exists, the script loads it directly for basic analysis
 - otherwise it downloads/processes the raw metadata and then writes both cached CSVs
 
 ## Training
