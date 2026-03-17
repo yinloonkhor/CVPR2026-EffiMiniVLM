@@ -43,7 +43,7 @@ TRAIN_DEFAULTS = {
     "seed": 42,
     "train_file": "data/cleaned.csv",
     "batch_size": 32,
-    "num_workers": 16,
+    "num_workers": 8,
     "num_images_per_sample": 1,
     "image_model_name": "efficientnet_b0",
     # "text_model_name": "nreimers/MiniLM-L6-H384-uncased",
