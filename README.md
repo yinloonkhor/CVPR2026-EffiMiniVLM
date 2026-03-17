@@ -30,6 +30,8 @@ If you want to change the default experiment behavior, update `config.py` first.
 
 ## Setup
 
+These setup and usage commands assume a Ubuntu environment.
+
 Install and sync dependencies with:
 
 ```bash
@@ -42,6 +44,11 @@ Also obtain the command to install PyTorch with CUDA based on your device throug
 
 ```bash
 uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
+```
+
+Then, activate the environment after downloading all the libraries.
+```bash
+source ./.venv/bin/activate
 ```
 
 ## Dataset Preparation
@@ -118,6 +125,32 @@ It currently:
 - reads local images from `CVPR_workshop_efficiencyVLM/setB`
 - writes `submission.csv`
 - reports parameter count and FLOPs alongside predictions
+
+## Runtime Metrics
+
+You can benchmark runtime metrics after preparing the checkpoint and inference dataset with:
+
+```bash
+uv run python runtime_metrics.py \
+  --model-path models/efficientnet_minilm/best/best_model.pt \
+  --input-csv CVPR_workshop_efficiencyVLM/setB/input.csv \
+  --images-dir CVPR_workshop_efficiencyVLM/setB \
+  --device cuda \
+  --timing-scope end_to_end \
+  --warmup-batches 5 \
+  --output-json runtime_metrics.json
+```
+
+`runtime_metrics.py` reports:
+- inference latency in `ms/sample`
+- throughput in `samples/s`
+- optional input-token-normalized metrics in `ms/token` and `tokens/s`
+- peak GPU memory usage on CUDA as `peak_vram_allocated_mb` and `peak_vram_reserved_mb`
+
+Notes:
+- For this project, `ms/sample` and `samples/s` are the primary runtime metrics because the model predicts one score per sample rather than generating output tokens.
+- `--warmup-batches 5` is recommended for steady-state benchmarking so one-time startup overhead is excluded from the reported latency and throughput.
+- If you run on CPU, GPU memory metrics are omitted automatically.
 
 ## Notes
 
