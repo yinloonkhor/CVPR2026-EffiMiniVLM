@@ -4,7 +4,7 @@ PREPARE_DATASET_DEFAULTS = {
     "cleaned_data_path": "data/cleaned.csv",
     "frac": 0.2,
     "random_state": 42,
-    "num_workers": 64,
+    "num_workers": 16,
 }
 
 
