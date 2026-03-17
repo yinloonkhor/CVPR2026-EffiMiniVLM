@@ -33,6 +33,8 @@ If you want to change the default experiment behavior, update `config.py` first.
 Install and sync dependencies with:
 
 ```bash
+git clone https://github.com/yinloonkhor/CVPR2026-EffiMiniVLM.git
+cd CVPR2026-EffiMiniVLM
 uv sync
 ```
 
