@@ -63,7 +63,7 @@ uv run python prepare_dataset.py \
   --random-state 42
 ```
 
-Or download the processed dataset from [Google Drive](https://drive.google.com/file/d/1Av9anhjgmeX0rpBOurZ0rE81jgp3El8w/view?usp=drive_link).
+Or download the processed dataset from [Google Drive](https://drive.google.com/file/d/1Av9anhjgmeX0rpBOurZ0rE81jgp3El8w/view?usp=drive_link), and store in `data` directory.
 
 `prepare_dataset.py` loads product metadata from the Hugging Face dataset [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023).
 
