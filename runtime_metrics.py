@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from config import TRAIN_DEFAULTS
-from data_pipeline import TestDataset, build_collate_fn
+from data_pipeline import TestDataset, build_inference_collate_fn
 from inference import load_model_from_path
 
 
@@ -24,7 +24,7 @@ def build_test_loader(
         num_images_per_sample=config.get("num_images_per_sample", 1),
     )
 
-    collate_fn = build_collate_fn(
+    collate_fn = build_inference_collate_fn(
         text_model_name=config.get(
             "text_model_name",
             "nreimers/MiniLM-L6-H384-uncased",
@@ -32,19 +32,12 @@ def build_test_loader(
         max_length=config.get("max_length", 256),
     )
 
-    def test_collate_fn(batch):
-        for item in batch:
-            item.setdefault("average_rating", 0.0)
-        result = collate_fn(batch)
-        result["item_ids"] = [item["item_id"] for item in batch]
-        return result
-
     loader_kwargs = {
         "batch_size": batch_size,
         "shuffle": False,
         "num_workers": num_workers,
         "pin_memory": torch.cuda.is_available(),
-        "collate_fn": test_collate_fn,
+        "collate_fn": collate_fn,
     }
     if num_workers > 0:
         loader_kwargs["persistent_workers"] = True

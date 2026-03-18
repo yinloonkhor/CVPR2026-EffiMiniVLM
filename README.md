@@ -30,7 +30,7 @@ If you want to change the default experiment behavior, update `config.py` first.
 
 ## Setup
 
-These setup and usage commands assume a Ubuntu environment.
+These setup and usage commands assume Ubuntu, but they were tested in a Windows environment.
 
 Install and sync dependencies with:
 

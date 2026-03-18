@@ -15,45 +15,64 @@ IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 
 
-def build_collate_fn(
-    text_model_name: str = "nreimers/MiniLM-L6-H384-uncased",
-    max_length: int = 256,
-    image_size: int = 224,
-    global_mean_log_rating: float = 1.0,
-):
-    """
-    Returns a collate_fn that:
-      - Tokenises text with the configured transformer tokenizer.
-      - Preprocesses images with EfficientNet-compatible transforms
-        (resize → tensor → ImageNet normalise).
-      - Packs everything into a dict with keys:
-          pixel_values, input_ids, attention_mask, labels, has_images
-    """
-    tokenizer = AutoTokenizer.from_pretrained(text_model_name)
+class MultimodalCollator:
+    """Picklable collator for multimodal batches."""
 
-    image_transform = transforms.Compose([
-        transforms.Resize((image_size, image_size)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
-    ])
+    def __init__(
+        self,
+        text_model_name: str,
+        max_length: int,
+        image_size: int,
+        global_mean_log_rating: float,
+    ):
+        self.text_model_name = text_model_name
+        self.max_length = max_length
+        self.image_size = image_size
+        self.global_mean_log_rating = global_mean_log_rating
+        self._tokenizer = None
+        self._image_transform = None
+        self._black_image = None
 
-    black_image = Image.new("RGB", (image_size, image_size), (0, 0, 0))
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state["_tokenizer"] = None
+        state["_image_transform"] = None
+        state["_black_image"] = None
+        return state
 
-    def collate_fn(batch):
+    def _ensure_assets(self):
+        if self._tokenizer is None:
+            self._tokenizer = AutoTokenizer.from_pretrained(self.text_model_name)
+        if self._image_transform is None:
+            self._image_transform = transforms.Compose([
+                transforms.Resize((self.image_size, self.image_size)),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
+            ])
+        if self._black_image is None:
+            self._black_image = Image.new(
+                "RGB",
+                (self.image_size, self.image_size),
+                (0, 0, 0),
+            )
+
+    def __call__(self, batch):
+        self._ensure_assets()
+
         texts = [item["question"] for item in batch]
-        text_enc = tokenizer(
+        text_enc = self._tokenizer(
             texts,
             padding=True,
             truncation=True,
-            max_length=max_length,
+            max_length=self.max_length,
             return_tensors="pt",
         )
 
         pixel_list = []
         for item in batch:
             img_list = item.get("image_urls", [])
-            pil_img = img_list[0] if len(img_list) > 0 else black_image # Only 1 image per sample for now
-            pixel_list.append(image_transform(pil_img))
+            pil_img = img_list[0] if len(img_list) > 0 else self._black_image
+            pixel_list.append(self._image_transform(pil_img))
         pixel_values = torch.stack(pixel_list, dim=0)
 
         if "average_rating" in batch[0]:
@@ -70,8 +89,8 @@ def build_collate_fn(
         )
         raw_weights = torch.log1p(raw_counts)
         weights = (
-            raw_weights / global_mean_log_rating
-            if global_mean_log_rating > 0.0
+            raw_weights / self.global_mean_log_rating
+            if self.global_mean_log_rating > 0.0
             else torch.ones_like(raw_weights)
         )
         weights = weights.clamp(max=5.0)
@@ -90,7 +109,53 @@ def build_collate_fn(
             "weights": weights,
         }
 
-    return collate_fn
+
+class InferenceCollator:
+    """Picklable wrapper that preserves item ids for inference loaders."""
+
+    def __init__(self, base_collator: MultimodalCollator):
+        self.base_collator = base_collator
+
+    def __call__(self, batch):
+        normalized_batch = []
+        for item in batch:
+            normalized_item = dict(item)
+            normalized_item.setdefault("average_rating", 0.0)
+            normalized_batch.append(normalized_item)
+
+        result = self.base_collator(normalized_batch)
+        result["item_ids"] = [item["item_id"] for item in batch]
+        return result
+
+
+def build_collate_fn(
+    text_model_name: str = "nreimers/MiniLM-L6-H384-uncased",
+    max_length: int = 256,
+    image_size: int = 224,
+    global_mean_log_rating: float = 1.0,
+):
+    """Returns a picklable collator that tokenises text and preprocesses images."""
+    return MultimodalCollator(
+        text_model_name=text_model_name,
+        max_length=max_length,
+        image_size=image_size,
+        global_mean_log_rating=global_mean_log_rating,
+    )
+
+
+def build_inference_collate_fn(
+    text_model_name: str = "nreimers/MiniLM-L6-H384-uncased",
+    max_length: int = 256,
+    image_size: int = 224,
+):
+    """Returns a picklable collator for inference and benchmarking loaders."""
+    return InferenceCollator(
+        build_collate_fn(
+            text_model_name=text_model_name,
+            max_length=max_length,
+            image_size=image_size,
+        )
+    )
 
 
 class MultimodalDataset(Dataset):

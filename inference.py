@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from config import TRAIN_DEFAULTS
-from data_pipeline import TestDataset, build_collate_fn
+from data_pipeline import TestDataset, build_inference_collate_fn
 from metric_utils import count_params, measure_flops
 from model import MultimodalRegressor
 
@@ -46,7 +46,7 @@ def generate_predictions(
         num_images_per_sample=config.get("num_images_per_sample", 1),
     )
 
-    collate_fn = build_collate_fn(
+    collate_fn = build_inference_collate_fn(
         text_model_name=config.get(
             "text_model_name",
             "nreimers/MiniLM-L6-H384-uncased",
@@ -54,19 +54,12 @@ def generate_predictions(
         max_length=config.get("max_length", 256),
     )
 
-    def test_collate_fn(batch):
-        for item in batch:
-            item.setdefault("average_rating", 0.0)
-        result = collate_fn(batch)
-        result["item_ids"] = [item["item_id"] for item in batch]
-        return result
-
     test_loader = DataLoader(
         test_dataset,
         batch_size=config.get("batch_size", 16),
         shuffle=False,
         num_workers=config.get("num_workers", 4),
-        collate_fn=test_collate_fn,
+        collate_fn=collate_fn,
     )
 
     all_item_ids = []
