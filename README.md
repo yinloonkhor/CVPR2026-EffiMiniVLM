@@ -1,6 +1,6 @@
 # EffiMiniVLM
 
-This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/) co-hosted by **Snap Inc.** & **NTU** & **SYSU**. Our approach ranked 3rd (tied with the official Snap Inc. team with 10x lesser training data and 10x smaller model footprint) globally in the challenge! 🏅🎉 Our paper is accepted by CVPRW 2026! 🥳
+This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/) co-hosted by **Snap Inc.** & **NTU** & **SYSU**. Our approach ranked 3rd (tied with the official Snap Inc. team with 10x lesser training data and 4x to 8x smaller model footprint) globally in the challenge! 🏅🎉 Our paper is accepted by CVPRW 2026! 🥳
 
 Lightweight multimodal regression pipeline built around:
 - `EfficientNet-B0` for images
@@ -8,6 +8,10 @@ Lightweight multimodal regression pipeline built around:
 - a small MLP fusion head for scalar score prediction
 
 The current codebase is split so data preparation, data loading, training, inference, and efficiency metrics are easier to inspect independently.
+
+## Updates [20260413]
+
+Our post-challenge analysis demonstrates promising results in scaling model capabilities, with our approach potentially outperforming even the 2nd and 3rd place teams while maintaining the smallest model footprint. The findings from this analysis and study will be published soon. Stay tuned!
 
 ## Project Layout
 
@@ -166,7 +170,7 @@ Notes:
 
 ## Cite this repository
 
-If this repo or my tutorial on backbone customization helps your research, please kindly star this repo and cite our paper 😄 The preprint can be found [here](https://arxiv.org/pdf/2604.03172)!
+If this repo helps your research, please kindly star this repo and cite our paper 😄 The preprint can be found [here](https://arxiv.org/pdf/2604.03172)!
 
 ```bash
 @InProceedings{khor2026cvprw,
@@ -178,7 +182,7 @@ If this repo or my tutorial on backbone customization helps your research, pleas
     pages     = {}
 }
 
-@inproceedings{zhang2025lovif,
+@inproceedings{zhang2026lovif,
     title   ={The 1st LoViF Challenge on Efficient VLM for Multimodal Creative Quality Scoring: Methods and Results},
     author  = {Zhang, Jusheng and Lyu, Qinhan and Li, Xin and Yang, Jing and Zhshchao and Ma, Sizhuo and Cao, Min and Wang, Jian and Leach, William and He, Ru and Jia, Yizhen and Cao, Sheng and Sui, Peimeng and Zhang, Hong and Khor, Yin-Loon and Wong, Yi-Jie and Hao, Yu},
     booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
