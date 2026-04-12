@@ -169,7 +169,7 @@ Notes:
 If this repo or my tutorial on backbone customization helps your research, please kindly star this repo and cite our paper 😄 The preprint can be found [here](https://arxiv.org/pdf/2604.03172)!
 
 ```bash
-@InProceedings{Khor_2026_CVPR,
+@InProceedings{khor2026cvprw,
     author    = {Khor, Yin-Loon and Wong, Yi-Jie and Hum, Yan Chai}, 
     title     = {EffiMiniVLM: A Compact Dual-Encoder Regression Framework},
     booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
@@ -177,4 +177,13 @@ If this repo or my tutorial on backbone customization helps your research, pleas
     year      = {2026},
     pages     = {}
 }
+
+@inproceedings{zhang2025lovif,
+    title   ={The 1st LoViF Challenge on Efficient VLM for Multimodal Creative Quality Scoring: Methods and Results},
+    author  = {Zhang, Jusheng and Lyu, Qinhan and Li, Xin and Yang, Jing and Zhshchao and Ma, Sizhuo and Cao, Min and Wang, Jian and Leach, William and He, Ru and Jia, Yizhen and Cao, Sheng and Sui, Peimeng and Zhang, Hong and Khor, Yin-Loon and Wong, Yi-Jie and Hao, Yu},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
+    month     = {June},
+    year      = {2026},
+    pages     = {}
+  }
 ```
