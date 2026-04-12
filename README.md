@@ -1,6 +1,6 @@
 # EffiMiniVLM
 
-This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/)
+This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/). Our approach ranked Top 3 globally in the challenge! 🏅🎉🥳
 
 Lightweight multimodal regression pipeline built around:
 - `EfficientNet-B0` for images
@@ -161,3 +161,20 @@ Notes:
 ## Acknowledgement
 - Datasets are obtained from [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023).
 - Dataset preprocessing techniques are referred from [AmazonReviews2023](https://github.com/hyp1231/AmazonReviews2023).
+
+-------
+
+## Cite this repository
+
+If this repo or my tutorial on backbone customization helps your research, please kindly star this repo and cite our paper 😄 The preprint can be found [here](https://arxiv.org/pdf/2604.03172)!
+
+```bash
+@InProceedings{Khor_2026_CVPR,
+    author    = {Khor, Yin-Loon and Wong, Yi-Jie and Hum, Yan Chai}, 
+    title     = {EffiMiniVLM: A Compact Dual-Encoder Regression Framework},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
+    month     = {June},
+    year      = {2026},
+    pages     = {}
+}
+```
