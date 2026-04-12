@@ -1,6 +1,6 @@
 # EffiMiniVLM
 
-This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/). Our approach ranked Top 3 globally in the challenge! 🏅🎉🥳
+This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/) co-hosted by Snap Inc. & NTU & SYSU. Our approach ranked 3rd (tied with the official Snap Inc. team with 10x lesser training data and 10x smaller model footprint) globally in the challenge! 🏅🎉 Our paper is accepted by CVPRW 2026! 🥳
 
 Lightweight multimodal regression pipeline built around:
 - `EfficientNet-B0` for images
