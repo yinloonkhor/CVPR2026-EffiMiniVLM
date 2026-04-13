@@ -1,3 +1,6 @@
+[![arXiv](https://img.shields.io/badge/build-paper-red?logo=arXiv&label=arXiv)](https://arxiv.org/abs/2604.03172)
+[![Challenge](https://img.shields.io/badge/Challenge-LoViF%202026-blue)](https://www.codabench.org/competitions/13463)
+
 # EffiMiniVLM: A Compact Dual-Encoder Regression Framework
 
 This repository is a solution for [LoViF @ CVPR 2026: Challenge on Efficient VLM for Multimodal Creative Quality Scoring](https://www.codabench.org/competitions/13463/) co-hosted by **Snap Inc.** & **NTU** & **SYSU**. Our approach ranked 3rd (tied with the official Snap Inc. team with 10x lesser training data and 4x to 8x smaller model footprint) globally in the challenge! 🏅🎉 Our paper is accepted by CVPRW 2026! 🥳
