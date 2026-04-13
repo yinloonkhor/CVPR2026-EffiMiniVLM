@@ -1,3 +1,4 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/yinloonkhor/CVPR2026-EffiMiniVLM)
 [![arXiv](https://img.shields.io/badge/build-paper-red?logo=arXiv&label=arXiv)](https://arxiv.org/abs/2604.03172)
 [![Challenge](https://img.shields.io/badge/Challenge-LoViF%202026-blue)](https://www.codabench.org/competitions/13463)
 
