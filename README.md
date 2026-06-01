@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/yinloonkhor/CVPR2026-EffiMiniVLM)
+[![CVF](https://img.shields.io/badge/CVF-CVPRW%202026-blue)](https://openaccess.thecvf.com/content/CVPR2026W/LoViF/papers/Khor_EffiMiniVLM_A_Compact_Dual-Encoder_Regression_Framework_CVPRW_2026_paper.pdf)
 [![arXiv](https://img.shields.io/badge/build-paper-red?logo=arXiv&label=arXiv)](https://arxiv.org/abs/2604.03172)
 [![Challenge](https://img.shields.io/badge/Challenge-LoViF%202026-blue)](https://www.codabench.org/competitions/13463)
 
